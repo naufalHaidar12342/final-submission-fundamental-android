@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Discover Github User</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="let_s_find_our_friend_in_github">Let\'s find our friend in Github!</string>
+    <string name="inspectocat_our_friendly_investigator">Inspectocat, our friendly investigator</string>
 </resources>
