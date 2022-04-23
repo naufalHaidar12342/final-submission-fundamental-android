@@ -27,5 +27,6 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bindingSearch?.inspectocatAtHome?.setImageResource(R.drawable.github_octocat_png_github_inspectocat_896)
+
     }
 }
