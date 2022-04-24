@@ -2,6 +2,28 @@
     <string name="app_name">Discover Github User</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="let_s_find_our_friend_in_github">Let\'s find our friend in Github!</string>
+    <string name="let_s_find_our_friend_in_github">No search performed.</string>
+    <string name="lets_search_it">Inspecto-cat got you covered, meow.</string>
     <string name="inspectocat_our_friendly_investigator">Inspectocat, our friendly investigator</string>
+    <string name="location_got_null_response_template">User does not disclose their location</string>
+    <string name="company_got_null_response_template">User does not disclose their company</string>
+    <string name="fullname_got_null_response_template">User does not set their display name</string>
+    <string name="monday">Monday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="repository_string_template">%1$s repository</string>
+    <string name="button_visit_profile">Visit Profile!</string>
+    <string name="followers_tab">Followers</string>
+    <string name="following_tab">Following</string>
+    <string name="username_template">\@%1$s</string>
+    <string name="image_description">Picture of user goes here</string>
+    <string name="full_name_design_placeholder">Ahmad Budd </string>
+    <string name="username_design_placeholder">\@ahmadbudd56</string>
+    <string name="user_repository_design_placeholder">4 repository</string>
+    <string name="user_location_design_placeholder">Location : Jakarta</string>
+    <string name="user_company_design_placeholder">Company : Bright Idea, Inc.</string>
+    <string name="theme_settings">Theme Settings</string>
+    <string name="favourite_user">Favourite User</string>
+    <string name="bio_placeholder">I\'m just your neighbour who likes to code </string>
+    <string name="null_bio_template">User did not set their bio</string>
 </resources>

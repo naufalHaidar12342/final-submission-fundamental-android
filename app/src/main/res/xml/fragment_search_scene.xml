@@ -45,14 +45,15 @@
         <Constraint
             android:id="@+id/recyclerView_search_user"
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             motion:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="8dp"
-            motion:layout_constraintTop_toBottomOf="@+id/textview_inspectocat"
             android:layout_marginStart="8dp"
             motion:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp" />
+            motion:layout_constraintTop_toBottomOf="@+id/textView"
+            android:layout_marginTop="8dp"
+            motion:layout_constraintHorizontal_bias="0.0" />
         <Constraint
             android:id="@+id/textview_inspectocat"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -99,13 +100,13 @@
             android:id="@+id/recyclerView_search_user"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             motion:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="8dp"
-            motion:layout_constraintTop_toBottomOf="@+id/textview_inspectocat"
             android:layout_marginStart="8dp"
             motion:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp" />
+            motion:layout_constraintTop_toBottomOf="@+id/textView_inspectocat_subtitle"
+            android:layout_marginTop="8dp" />
         <Constraint
             android:id="@+id/textview_inspectocat"
             motion:layout_constraintEnd_toEndOf="parent"
