@@ -12,7 +12,7 @@
     <string name="wednesday">Wednesday</string>
     <string name="tuesday">Tuesday</string>
     <string name="repository_string_template">%1$s repository</string>
-    <string name="button_visit_profile">Visit Profile!</string>
+    <string name="button_visit_profile">Profile</string>
     <string name="followers_tab">Followers</string>
     <string name="following_tab">Following</string>
     <string name="username_template">\@%1$s</string>

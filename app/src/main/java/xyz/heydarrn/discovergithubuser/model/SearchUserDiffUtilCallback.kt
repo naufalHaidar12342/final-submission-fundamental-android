@@ -9,9 +9,7 @@ class SearchUserDiffUtilCallback:DiffUtil.ItemCallback<ItemsItem>() {
     }
 
     override fun areContentsTheSame(oldItem: ItemsItem, newItem: ItemsItem): Boolean {
-        return oldItem.login == newItem.login
-                && oldItem.avatarUrl == newItem.avatarUrl
-                && oldItem.htmlUrl == newItem.htmlUrl
+        return oldItem == newItem
     }
 
 }
