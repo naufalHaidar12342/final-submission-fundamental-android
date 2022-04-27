@@ -9,5 +9,31 @@
         android:id="@+id/searchFragment"
         android:name="xyz.heydarrn.discovergithubuser.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailOfSelectedUserFragment"
+            app:destination="@id/navigation_detail_user" />
+        <argument
+            android:name="usernameSelected"
+            app:argType="string"
+            android:defaultValue="naufalHaidar" />
+    </fragment>
+    <navigation android:id="@+id/navigation_detail_user"
+        app:startDestination="@id/detailOfSelectedUserFragment">
+        <fragment
+            android:id="@+id/detailOfSelectedUserFragment"
+            android:name="xyz.heydarrn.discovergithubuser.DetailOfSelectedUserFragment"
+            android:label="fragment_detail_of_selected_user"
+            tools:layout="@layout/fragment_detail_of_selected_user" />
+        <fragment
+            android:id="@+id/followerFragment"
+            android:name="xyz.heydarrn.discovergithubuser.FollowerFragment"
+            android:label="fragment_follower"
+            tools:layout="@layout/fragment_follower" />
+        <fragment
+            android:id="@+id/followingFragment"
+            android:name="xyz.heydarrn.discovergithubuser.FollowingFragment"
+            android:label="fragment_following"
+            tools:layout="@layout/fragment_following" />
+    </navigation>
 </navigation>
