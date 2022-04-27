@@ -19,7 +19,7 @@
     <string name="image_description">Picture of user goes here</string>
     <string name="full_name_design_placeholder">Ahmad Budd </string>
     <string name="username_design_placeholder">\@ahmadbudd56</string>
-    <string name="user_repository_design_placeholder">4 repository</string>
+    <string name="user_repository_design_placeholder">4 public repository</string>
     <string name="user_location_design_placeholder">Location : Jakarta</string>
     <string name="user_company_design_placeholder">Company : Bright Idea, Inc.</string>
     <string name="theme_settings">Theme Settings</string>
