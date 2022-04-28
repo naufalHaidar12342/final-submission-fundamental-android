@@ -7,9 +7,10 @@
         <entry key="..\:/Android Development Dicoding x Bangkit/DiscoverGithubUser/app/src/main/res/drawable/ic_building.xml" value="0.1975" />
         <entry key="..\:/Android Development Dicoding x Bangkit/DiscoverGithubUser/app/src/main/res/drawable/ic_git.xml" value="0.1975" />
         <entry key="..\:/Android Development Dicoding x Bangkit/DiscoverGithubUser/app/src/main/res/layout/activity_main.xml" value="0.22010869565217392" />
-        <entry key="..\:/Android Development Dicoding x Bangkit/DiscoverGithubUser/app/src/main/res/layout/fragment_detail_of_selected_user.xml" value="0.1" />
+        <entry key="..\:/Android Development Dicoding x Bangkit/DiscoverGithubUser/app/src/main/res/layout/fragment_detail_of_selected_user.xml" value="0.33" />
         <entry key="..\:/Android Development Dicoding x Bangkit/DiscoverGithubUser/app/src/main/res/layout/fragment_search.xml" value="0.33" />
         <entry key="..\:/Android Development Dicoding x Bangkit/DiscoverGithubUser/app/src/main/res/layout/github_user_card.xml" value="0.33" />
+        <entry key="..\:/Android Development Dicoding x Bangkit/DiscoverGithubUser/app/src/main/res/menu/option_menu.xml" value="0.34791666666666665" />
       </map>
     </option>
   </component>

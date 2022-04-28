@@ -24,7 +24,8 @@ class SearchUserListAdapter:ListAdapter<ItemsItem,SearchUserListAdapter.SearchVi
             bindingUser.apply {
                 Glide.with(itemView)
                     .load(item.avatarUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                     .circleCrop()
                     .into(profilePicsUserCard)
 

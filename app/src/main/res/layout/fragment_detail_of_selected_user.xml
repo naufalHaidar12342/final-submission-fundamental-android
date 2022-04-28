@@ -12,8 +12,9 @@
         android:layout_width="match_parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:layout_height="?attr/actionBarSize"
             android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/octocat_tentacle_suction"
             app:layout_scrollFlags="scroll|enterAlways"></androidx.appcompat.widget.Toolbar>
 
         <androidx.constraintlayout.widget.ConstraintLayout
