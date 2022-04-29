@@ -15,11 +15,11 @@ import xyz.heydarrn.discovergithubuser.model.api.ItemsItem
 import xyz.heydarrn.discovergithubuser.model.api.SearchUserResponse
 
 class SearchUserListAdapter:ListAdapter<ItemsItem,SearchUserListAdapter.SearchViewHolder>(SearchUserDiffUtilCallback()) {
-    private var whenUserSelected: ClickThisUser?=null
+    var whenUserSelected: ClickThisUser?=null
 
     fun setThisUserForSending(thisSelectedUser:ClickThisUser){ this.whenUserSelected=thisSelectedUser }
 
-    class SearchViewHolder(private val bindingUser:GithubUserCardBinding):RecyclerView.ViewHolder(bindingUser.root) {
+    inner class SearchViewHolder(private val bindingUser:GithubUserCardBinding):RecyclerView.ViewHolder(bindingUser.root) {
         fun bindDataToCard(item:ItemsItem){
             bindingUser.apply {
                 Glide.with(itemView)
@@ -35,6 +35,9 @@ class SearchUserListAdapter:ListAdapter<ItemsItem,SearchUserListAdapter.SearchVi
                     itemView.context.startActivity(
                         Intent(Intent.ACTION_VIEW, Uri.parse(item.htmlUrl))
                     )
+                }
+                root.setOnClickListener {
+                    whenUserSelected?.selectThisUser(item.login)
                 }
 
             }
@@ -52,6 +55,6 @@ class SearchUserListAdapter:ListAdapter<ItemsItem,SearchUserListAdapter.SearchVi
     }
 
     interface ClickThisUser{
-        fun selectThisUser(selectedUser:ItemsItem)
+        fun selectThisUser(selectedUser:String)
     }
 }

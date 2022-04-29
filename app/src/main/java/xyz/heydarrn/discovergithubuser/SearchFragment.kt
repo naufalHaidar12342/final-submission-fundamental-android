@@ -7,9 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.heydarrn.discovergithubuser.databinding.FragmentSearchBinding
 import xyz.heydarrn.discovergithubuser.model.SearchUserListAdapter
+import xyz.heydarrn.discovergithubuser.model.api.ItemsItem
 import xyz.heydarrn.discovergithubuser.viewmodel.SearchUserViewModel
 
 class SearchFragment : Fragment() {
@@ -17,6 +22,7 @@ class SearchFragment : Fragment() {
     private val bindingSearch get() = _bindingSearchFragment
     private val viewModelSearch by viewModels<SearchUserViewModel>()
     private val searchAdapter by lazy { SearchUserListAdapter() }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +72,14 @@ class SearchFragment : Fragment() {
             this.layoutManager=LinearLayoutManager(context)
             this.adapter=searchAdapter
         }
+        searchAdapter.setThisUserForSending(object : SearchUserListAdapter.ClickThisUser {
+
+            override fun selectThisUser(selectedUser: String) {
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailOfSelectedUserFragment().setUsernameSelected(
+                    selectedUser))
+            }
+
+        })
         viewModelSearch.setResultForViewModel().observe(viewLifecycleOwner){
             if (it!=null){
                 searchAdapter.submitList(it)

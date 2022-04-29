@@ -19,11 +19,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="380dp"
+            android:layout_height="400dp"
             android:background="@color/octocat_tentacle_suction">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/profilePics_user_detail"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_marginStart="32dp"
@@ -38,7 +38,7 @@
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/username_user_detail"
                 style="@style/username_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,10 +51,10 @@
                 app:drawableStartCompat="@drawable/ic_github"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                app:layout_constraintTop_toBottomOf="@+id/profilePics_user_detail" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/fullname_user_detail"
                 style="@style/fullname_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,10 +64,10 @@
                 android:textColor="@color/octocat_main_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/username_user_detail" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/company_user_detail"
                 style="@style/company_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,10 +80,10 @@
                 app:drawableStartCompat="@drawable/ic_building"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintTop_toBottomOf="@+id/fullname_user_detail" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/location_user_detail"
                 style="@style/location_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,10 +95,10 @@
                 app:drawableStartCompat="@drawable/ic_geo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintTop_toBottomOf="@+id/company_user_detail" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/repository_user_detail"
                 style="@style/repository_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,12 +113,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/location_user_detail"
                 app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+            android:id="@+id/tabs_collapsible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -147,6 +147,7 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPagers2_user_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </androidx.core.widget.NestedScrollView>

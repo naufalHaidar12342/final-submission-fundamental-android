@@ -1,59 +1,88 @@
 package xyz.heydarrn.discovergithubuser
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import xyz.heydarrn.discovergithubuser.databinding.FragmentDetailOfSelectedUserBinding
+import xyz.heydarrn.discovergithubuser.model.TabLayoutAdapter
+import xyz.heydarrn.discovergithubuser.viewmodel.DetailOfUserViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailOfSelectedUserFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DetailOfSelectedUserFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val args:DetailOfSelectedUserFragmentArgs by navArgs()
+    private lateinit var receivedArgs:String
+    private var _bindingDetail:FragmentDetailOfSelectedUserBinding?=null
+    private val bindingDetail get() = _bindingDetail
+    private val viewModelDetail by viewModels<DetailOfUserViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_of_selected_user, container, false)
+        _bindingDetail= FragmentDetailOfSelectedUserBinding.inflate(inflater,container,false)
+        return bindingDetail?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        receivedArgs=args.usernameSelected
+        Log.d("CHECK ARGS", "onViewCreated: $receivedArgs")
+        setTabLayout()
+        setUserDetail(receivedArgs)
+    }
+
+    private fun setUserDetail(username:String){
+        viewModelDetail.setUserDetailInfo(username)
+        viewModelDetail.setNewUserDetail().observe(viewLifecycleOwner){
+            if (it!=null){
+                bindingDetail?.apply {
+                    Glide.with(requireActivity())
+                        .load(it.avatarUrl)
+                        .placeholder(R.mipmap.ic_launcher_round)
+                        .circleCrop()
+                        .into(profilePicsUserDetail)
+                    usernameUserDetail.text=resources.getString(R.string.username_template,it.login)
+                    if (it.name!=null){ fullnameUserDetail.text=it.name}
+                    else { fullnameUserDetail.text=resources.getString(R.string.fullname_got_null_response_template)}
+
+                    if (it.company!=null) companyUserDetail.text=it.company
+                    else companyUserDetail.text=resources.getString(R.string.company_got_null_response_template)
+
+                    repositoryUserDetail.text=resources.getString(R.string.repository_string_template,it.publicRepos.toString())
+                }
+            }
+        }
+    }
+    private fun setTabLayout(){
+        val tabSection=TabLayoutAdapter(requireActivity())
+        val viewPagers: ViewPager2 = bindingDetail?.viewPagers2UserDetail!!
+        viewPagers.adapter=tabSection
+
+        val tabs: TabLayout = bindingDetail!!.tabsCollapsible
+        TabLayoutMediator(tabs,viewPagers) {tab, position ->
+            tab.text=resources.getString(TAB_NAMES[position])
+        }.attach()
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailOfSelectedUserFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailOfSelectedUserFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        private val TAB_NAMES= intArrayOf(
+            R.string.followers_tab,
+            R.string.following_tab
+        )
     }
 }
