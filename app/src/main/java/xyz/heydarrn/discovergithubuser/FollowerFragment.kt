@@ -1,59 +1,71 @@
 package xyz.heydarrn.discovergithubuser
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import xyz.heydarrn.discovergithubuser.databinding.FragmentFollowerBinding
+import xyz.heydarrn.discovergithubuser.model.FollowerListAdapter
+import xyz.heydarrn.discovergithubuser.viewmodel.FollowerViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FollowerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FollowerFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _bindingFollower:FragmentFollowerBinding?=null
+    private val bindingFollower get() = _bindingFollower
+    private val viewModelFollower by viewModels<FollowerViewModel>()
+    private var gettingBundle=Bundle()
+    private val adapterFollower by lazy { FollowerListAdapter() }
+    private var getFromListener:String="naufalHaidar"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_follower, container, false)
+        _bindingFollower= FragmentFollowerBinding.inflate(inflater,container,false)
+        return bindingFollower?.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FollowerFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FollowerFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener("USERNAME_LISTEN"){_,bundle ->
+            getFromListener=bundle.getString("USER","naufalHaidar")
+            Log.d("CHECK FRAG LISTEN", "onViewCreated: $getFromListener")
+            monitorViewModelFollower(getFromListener)
+            Log.d("CHECK STRING", "onViewCreated: getFromListener = $getFromListener")
+        }
+    }
+
+    private fun monitorViewModelFollower(getUsername:String){
+        viewModelFollower.setFollower(getUsername)
+        bindingFollower?.recyclerViewFollower?.apply {
+            setHasFixedSize(true)
+            layoutManager=LinearLayoutManager(context)
+            adapter=adapterFollower
+        }
+        viewModelFollower.setNewFollower().observe(viewLifecycleOwner){
+            if (it!=null){
+                adapterFollower.submitList(it)
+                false.showLoadingProgress()
             }
+        }
+    }
+    private fun Boolean.showLoadingProgress(){
+        when(this){
+            true -> bindingFollower?.progressBarFollower?.visibility=View.VISIBLE
+            false -> bindingFollower?.progressBarFollower?.visibility=View.GONE
+        }
+    }
+    companion object {
+
     }
 }

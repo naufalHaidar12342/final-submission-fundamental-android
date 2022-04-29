@@ -73,13 +73,12 @@ class SearchFragment : Fragment() {
             this.adapter=searchAdapter
         }
         searchAdapter.setThisUserForSending(object : SearchUserListAdapter.ClickThisUser {
-
             override fun selectThisUser(selectedUser: String) {
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailOfSelectedUserFragment().setUsernameSelected(
                     selectedUser))
             }
-
         })
+
         viewModelSearch.setResultForViewModel().observe(viewLifecycleOwner){
             if (it!=null){
                 searchAdapter.submitList(it)

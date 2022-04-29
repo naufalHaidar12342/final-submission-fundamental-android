@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
@@ -23,6 +26,7 @@ class DetailOfSelectedUserFragment : Fragment() {
     private var _bindingDetail:FragmentDetailOfSelectedUserBinding?=null
     private val bindingDetail get() = _bindingDetail
     private val viewModelDetail by viewModels<DetailOfUserViewModel>()
+    private var sendToFollowerAndFollowingFragment=Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +46,9 @@ class DetailOfSelectedUserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         receivedArgs=args.usernameSelected
         Log.d("CHECK ARGS", "onViewCreated: $receivedArgs")
+        childFragmentManager.commit {
+            setFragmentResult("USERNAME_LISTEN", bundleOf("USER" to receivedArgs))
+        }
         setTabLayout()
         setUserDetail(receivedArgs)
     }
