@@ -10,10 +10,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import xyz.heydarrn.discovergithubuser.databinding.FragmentDetailOfSelectedUserBinding
@@ -26,13 +26,7 @@ class DetailOfSelectedUserFragment : Fragment() {
     private var _bindingDetail:FragmentDetailOfSelectedUserBinding?=null
     private val bindingDetail get() = _bindingDetail
     private val viewModelDetail by viewModels<DetailOfUserViewModel>()
-    private var sendToFollowerAndFollowingFragment=Bundle()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,12 +39,9 @@ class DetailOfSelectedUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         receivedArgs=args.usernameSelected
-        Log.d("CHECK ARGS", "onViewCreated: $receivedArgs")
-        childFragmentManager.commit {
-            setFragmentResult("USERNAME_LISTEN", bundleOf("USER" to receivedArgs))
-        }
-        setTabLayout()
+
         setUserDetail(receivedArgs)
+        openFollowerPage(receivedArgs)
     }
 
     private fun setUserDetail(username:String){
@@ -75,21 +66,14 @@ class DetailOfSelectedUserFragment : Fragment() {
             }
         }
     }
-    private fun setTabLayout(){
-        val tabSection=TabLayoutAdapter(requireActivity())
-        val viewPagers: ViewPager2 = bindingDetail?.viewPagers2UserDetail!!
-        viewPagers.adapter=tabSection
 
-        val tabs: TabLayout = bindingDetail!!.tabsCollapsible
-        TabLayoutMediator(tabs,viewPagers) {tab, position ->
-            tab.text=resources.getString(TAB_NAMES[position])
-        }.attach()
+    private fun openFollowerPage(sendStringToFollowerFragment: String){
+        bindingDetail?.buttonToFollower?.setOnClickListener {
+            findNavController().navigate(
+                DetailOfSelectedUserFragmentDirections
+                    .actionDetailOfSelectedUserFragmentToFollowerFragment()
+                    .setUsernameToFollower(sendStringToFollowerFragment))
+        }
     }
 
-    companion object {
-        private val TAB_NAMES= intArrayOf(
-            R.string.followers_tab,
-            R.string.following_tab
-        )
-    }
 }

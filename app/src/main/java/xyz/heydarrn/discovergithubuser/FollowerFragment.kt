@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.heydarrn.discovergithubuser.databinding.FragmentFollowerBinding
 import xyz.heydarrn.discovergithubuser.model.FollowerListAdapter
@@ -17,14 +18,9 @@ class FollowerFragment : Fragment() {
     private var _bindingFollower:FragmentFollowerBinding?=null
     private val bindingFollower get() = _bindingFollower
     private val viewModelFollower by viewModels<FollowerViewModel>()
-    private var gettingBundle=Bundle()
     private val adapterFollower by lazy { FollowerListAdapter() }
-    private var getFromListener:String="naufalHaidar"
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var receivedUsername:String
+    private val argsFollower:FollowerFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,13 +32,11 @@ class FollowerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //set receivedUsername value with safe argument, sent by detail user fragment
+        receivedUsername=argsFollower.usernameToFollower
 
-        setFragmentResultListener("USERNAME_LISTEN"){_,bundle ->
-            getFromListener=bundle.getString("USER","naufalHaidar")
-            Log.d("CHECK FRAG LISTEN", "onViewCreated: $getFromListener")
-            monitorViewModelFollower(getFromListener)
-            Log.d("CHECK STRING", "onViewCreated: getFromListener = $getFromListener")
-        }
+        monitorViewModelFollower(receivedUsername)
+
     }
 
     private fun monitorViewModelFollower(getUsername:String){
@@ -65,7 +59,5 @@ class FollowerFragment : Fragment() {
             false -> bindingFollower?.progressBarFollower?.visibility=View.GONE
         }
     }
-    companion object {
-
-    }
+    companion object
 }
