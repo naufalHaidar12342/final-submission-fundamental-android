@@ -13,4 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-/secret_token.gradle
+secret_token.gradle
