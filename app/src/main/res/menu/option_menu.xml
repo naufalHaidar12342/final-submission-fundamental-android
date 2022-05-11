@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Item" />
-    <item android:title="Item" />
+    <item
+        android:id="@+id/favourite_user_option"
+        android:title="@string/favourite_user" />
+    <item
+        android:id="@+id/theme_settings_option"
+        android:title="@string/theme_settings" />
 </menu>

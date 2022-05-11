@@ -59,5 +59,4 @@ class FollowerFragment : Fragment() {
             false -> bindingFollower?.progressBarFollower?.visibility=View.GONE
         }
     }
-    companion object
 }

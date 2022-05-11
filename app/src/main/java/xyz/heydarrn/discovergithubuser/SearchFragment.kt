@@ -1,11 +1,11 @@
 package xyz.heydarrn.discovergithubuser
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -23,7 +23,6 @@ class SearchFragment : Fragment() {
     private val viewModelSearch by viewModels<SearchUserViewModel>()
     private val searchAdapter by lazy { SearchUserListAdapter() }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,12 +34,17 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bindingSearch?.inspectocatAtHome
-            ?.setImageResource(R.drawable.github_octocat_png_github_inspectocat_896)
+        bindingSearch?.inspectocatAtHome?.setImageResource(
+            R.drawable.github_octocat_png_github_inspectocat_896)
+        setOptionMenuForSearchFragment()
         monitorViewModel()
         getTextFromSearchView()
     }
-
+    private fun setOptionMenuForSearchFragment(){
+        bindingSearch?.toolbar?.apply {
+            inflateMenu(R.menu.option_menu)
+        }
+    }
     private fun getTextFromSearchView(){
         bindingSearch?.searchViewSearchUser?.apply {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -69,8 +73,10 @@ class SearchFragment : Fragment() {
         }
         searchAdapter.setThisUserForSending(object : SearchUserListAdapter.ClickThisUser {
             override fun selectThisUser(selectedUser: String) {
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailOfSelectedUserFragment().setUsernameSelected(
-                    selectedUser))
+                findNavController().navigate(
+                    SearchFragmentDirections
+                        .actionSearchFragmentToDetailOfSelectedUserFragment()
+                        .setUsernameSelected(selectedUser))
             }
         })
 
@@ -108,4 +114,5 @@ class SearchFragment : Fragment() {
             }
         }
     }
+
 }
