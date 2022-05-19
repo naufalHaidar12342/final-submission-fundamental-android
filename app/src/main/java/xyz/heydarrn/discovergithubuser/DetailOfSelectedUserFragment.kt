@@ -28,6 +28,11 @@ class DetailOfSelectedUserFragment : Fragment() {
     private val bindingDetail get() = _bindingDetail
     private val viewModelDetail by viewModels<DetailOfUserViewModel>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -102,7 +107,7 @@ class DetailOfSelectedUserFragment : Fragment() {
 
     private fun setOptionMenuForDetailFragment(){
         bindingDetail?.toolbarDetail?.apply {
-            val host:MenuHost=requireActivity()
+            val host:MenuHost=this
             host.addMenuProvider(object : MenuProvider {
                 override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                     menuInflater.inflate(R.menu.option_menu,menu)

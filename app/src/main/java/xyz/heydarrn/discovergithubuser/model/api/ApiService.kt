@@ -23,6 +23,7 @@ interface ApiService {
     @Headers(GITHUB_TOKEN)
     @GET("users/{username}/following")
     fun selectedUserFollowing(@Path("username") showThisUserFollowing: String) : Call<ArrayList<FollowingOfUserResponse>>
+
     companion object{
         private const val GITHUB_TOKEN=BuildConfig.PERSONAL_ACCESS_TOKEN
     }

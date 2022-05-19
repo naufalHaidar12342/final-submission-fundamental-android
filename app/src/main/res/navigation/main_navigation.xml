@@ -16,6 +16,12 @@
                 android:name="usernameSelected"
                 android:defaultValue="naufal" />
         </action>
+        <action
+            android:id="@+id/action_searchFragment_to_favouriteUserFragment"
+            app:destination="@id/favouriteUserFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_themeSettingFragment"
+            app:destination="@id/themeSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailOfSelectedUserFragment"
@@ -52,4 +58,14 @@
             app:argType="string"
             android:defaultValue="naufalHaidar12342" />
     </fragment>
+    <fragment
+        android:id="@+id/favouriteUserFragment"
+        android:name="xyz.heydarrn.discovergithubuser.FavouriteUserFragment"
+        android:label="fragment_favourite_user"
+        tools:layout="@layout/fragment_favourite_user" />
+    <fragment
+        android:id="@+id/themeSettingFragment"
+        android:name="xyz.heydarrn.discovergithubuser.ThemeSettingFragment"
+        android:label="fragment_theme_setting"
+        tools:layout="@layout/fragment_theme_setting" />
 </navigation>

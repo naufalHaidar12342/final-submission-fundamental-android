@@ -40,9 +40,24 @@ class SearchFragment : Fragment() {
         monitorViewModel()
         getTextFromSearchView()
     }
+
+
     private fun setOptionMenuForSearchFragment(){
         bindingSearch?.toolbar?.apply {
             inflateMenu(R.menu.option_menu)
+            setOnMenuItemClickListener { itemMenu ->
+                when(itemMenu.itemId){
+                    R.id.favourite_user_option ->{
+
+                        true
+                    }
+                    R.id.theme_settings_option ->{
+                        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToThemeSettingFragment())
+                        true
+                    }
+                    else -> {false}
+                }
+            }
         }
     }
     private fun getTextFromSearchView(){
