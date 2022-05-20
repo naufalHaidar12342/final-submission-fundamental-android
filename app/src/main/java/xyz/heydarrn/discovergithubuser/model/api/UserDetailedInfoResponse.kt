@@ -19,5 +19,8 @@ data class UserDetailedInfoResponse(
     val publicRepos: Int? = null,
 
     @field:SerializedName("login")
-    val login: String? = null
+    val login: String? = null,
+
+    @field:SerializedName("id")
+    val id:Int? =null
 )

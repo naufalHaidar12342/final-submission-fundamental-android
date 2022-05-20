@@ -4,17 +4,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.SearchView
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.heydarrn.discovergithubuser.databinding.FragmentSearchBinding
 import xyz.heydarrn.discovergithubuser.model.SearchUserListAdapter
-import xyz.heydarrn.discovergithubuser.model.api.ItemsItem
 import xyz.heydarrn.discovergithubuser.viewmodel.SearchUserViewModel
 
 class SearchFragment : Fragment() {
@@ -87,11 +82,12 @@ class SearchFragment : Fragment() {
             this.adapter=searchAdapter
         }
         searchAdapter.setThisUserForSending(object : SearchUserListAdapter.ClickThisUser {
-            override fun selectThisUser(selectedUser: String) {
+            override fun selectThisUser(selectedUser: String, idSelected:Int) {
                 findNavController().navigate(
                     SearchFragmentDirections
                         .actionSearchFragmentToDetailOfSelectedUserFragment()
-                        .setUsernameSelected(selectedUser))
+                        .setUsernameSelected(selectedUser)
+                        .setIdOfUsernameSelected(idSelected))
             }
         })
 

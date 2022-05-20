@@ -21,5 +21,8 @@ data class ItemsItem(
     val htmlUrl: String,
 
     @field:SerializedName("login")
-    val login: String
+    val login: String,
+
+    @field:SerializedName("id")
+    val id:Int
 )

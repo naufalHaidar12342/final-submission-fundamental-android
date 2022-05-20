@@ -37,7 +37,7 @@ class SearchUserListAdapter:ListAdapter<ItemsItem,SearchUserListAdapter.SearchVi
                     )
                 }
                 root.setOnClickListener {
-                    whenUserSelected?.selectThisUser(item.login)
+                    whenUserSelected?.selectThisUser(item.login, item.id)
                 }
 
             }
@@ -55,6 +55,6 @@ class SearchUserListAdapter:ListAdapter<ItemsItem,SearchUserListAdapter.SearchVi
     }
 
     interface ClickThisUser{
-        fun selectThisUser(selectedUser:String)
+        fun selectThisUser(selectedUser:String, idSelected:Int)
     }
 }

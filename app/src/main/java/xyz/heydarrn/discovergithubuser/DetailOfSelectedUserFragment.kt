@@ -1,5 +1,6 @@
 package xyz.heydarrn.discovergithubuser
 
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -17,6 +18,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import xyz.heydarrn.discovergithubuser.databinding.FragmentDetailOfSelectedUserBinding
 import xyz.heydarrn.discovergithubuser.model.TabLayoutAdapter
 import xyz.heydarrn.discovergithubuser.viewmodel.DetailOfUserViewModel
@@ -26,7 +31,10 @@ class DetailOfSelectedUserFragment : Fragment() {
     private lateinit var receivedArgs:String
     private var _bindingDetail:FragmentDetailOfSelectedUserBinding?=null
     private val bindingDetail get() = _bindingDetail
-    private val viewModelDetail by viewModels<DetailOfUserViewModel>()
+    private val viewModelDetail:DetailOfUserViewModel by viewModels { DetailOfUserViewModel(
+        requireActivity().application
+    ) }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,14 +47,15 @@ class DetailOfSelectedUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         receivedArgs=args.usernameSelected
+        val receivedID=args.idOfUsernameSelected
 
         setOptionMenuForDetailFragment()
-        setUserDetail(receivedArgs)
+        setUserDetail(receivedArgs, receivedID)
         openFollowerPage(receivedArgs)
         openFollowingPage(receivedArgs)
     }
 
-    private fun setUserDetail(username:String){
+    private fun setUserDetail(username:String, userID:Int){
         viewModelDetail.setUserDetailInfo(username)
         viewModelDetail.setNewUserDetail().observe(viewLifecycleOwner){
             if (it!=null){
@@ -78,6 +87,33 @@ class DetailOfSelectedUserFragment : Fragment() {
                     repositoryUserDetail.text=resources.getString(R.string.repository_string_template,it.publicRepos.toString())
                 }
             }
+        }
+
+        var isSwitched= false
+        CoroutineScope(Dispatchers.IO).launch {
+            val countUser=viewModelDetail.checkFavouriteUser(userID)
+            withContext(Dispatchers.Main){
+                if (countUser!=null){
+                    if (countUser>0){
+                        bindingDetail?.toggleButtonFavouriteUser?.isChecked=true
+                        isSwitched=true
+                    }else{
+                        bindingDetail?.toggleButtonFavouriteUser?.isChecked=false
+                        isSwitched=false
+                    }
+                }
+            }
+        }
+
+        //remove user from favourite user database
+        bindingDetail?.toggleButtonFavouriteUser?.setOnClickListener {
+            isSwitched = ! isSwitched
+            if (isSwitched){
+                viewModelDetail.addToFavourite(username,userID)
+            }else{
+                viewModelDetail.removeFavouriteUserWithID(userID)
+            }
+            bindingDetail?.toggleButtonFavouriteUser?.isChecked=isSwitched
         }
     }
 

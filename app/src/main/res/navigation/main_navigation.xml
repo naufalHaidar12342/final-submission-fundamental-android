@@ -37,6 +37,10 @@
         <action
             android:id="@+id/action_detailOfSelectedUserFragment_to_followingFragment"
             app:destination="@id/followingFragment" />
+        <argument
+            android:name="idOfUsernameSelected"
+            app:argType="integer"
+            android:defaultValue="1" />
     </fragment>
     <fragment
         android:id="@+id/followerFragment"
