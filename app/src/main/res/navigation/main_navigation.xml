@@ -41,6 +41,15 @@
             android:name="idOfUsernameSelected"
             app:argType="integer"
             android:defaultValue="1" />
+        <action
+            android:id="@+id/action_detailOfSelectedUserFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_detailOfSelectedUserFragment_to_themeSettingFragment"
+            app:destination="@id/themeSettingFragment" />
+        <action
+            android:id="@+id/action_detailOfSelectedUserFragment_to_favouriteUserFragment"
+            app:destination="@id/favouriteUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/followerFragment"
@@ -51,6 +60,9 @@
             android:name="usernameToFollower"
             app:argType="string"
             android:defaultValue="naufalHaidar12342" />
+        <action
+            android:id="@+id/action_followerFragment_to_detailOfSelectedUserFragment"
+            app:destination="@id/detailOfSelectedUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/followingFragment"
@@ -61,6 +73,9 @@
             android:name="usernameToFollowing"
             app:argType="string"
             android:defaultValue="naufalHaidar12342" />
+        <action
+            android:id="@+id/action_followingFragment_to_detailOfSelectedUserFragment"
+            app:destination="@id/detailOfSelectedUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/favouriteUserFragment"
@@ -71,5 +86,9 @@
         android:id="@+id/themeSettingFragment"
         android:name="xyz.heydarrn.discovergithubuser.ThemeSettingFragment"
         android:label="fragment_theme_setting"
-        tools:layout="@layout/fragment_theme_setting" />
+        tools:layout="@layout/fragment_theme_setting" >
+        <action
+            android:id="@+id/action_themeSettingFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 </navigation>

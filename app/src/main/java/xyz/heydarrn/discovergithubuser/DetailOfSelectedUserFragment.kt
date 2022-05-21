@@ -12,10 +12,15 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.CoroutineScope
@@ -31,9 +36,7 @@ class DetailOfSelectedUserFragment : Fragment() {
     private lateinit var receivedArgs:String
     private var _bindingDetail:FragmentDetailOfSelectedUserBinding?=null
     private val bindingDetail get() = _bindingDetail
-    private val viewModelDetail:DetailOfUserViewModel by viewModels { DetailOfUserViewModel(
-        requireActivity().application
-    ) }
+    private lateinit var viewModelDetail:DetailOfUserViewModel
 
 
     override fun onCreateView(
@@ -48,11 +51,13 @@ class DetailOfSelectedUserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         receivedArgs=args.usernameSelected
         val receivedID=args.idOfUsernameSelected
+        viewModelDetail= ViewModelProvider(this)[DetailOfUserViewModel::class.java]
 
         setOptionMenuForDetailFragment()
         setUserDetail(receivedArgs, receivedID)
         openFollowerPage(receivedArgs)
         openFollowingPage(receivedArgs)
+
     }
 
     private fun setUserDetail(username:String, userID:Int){
@@ -136,7 +141,7 @@ class DetailOfSelectedUserFragment : Fragment() {
     }
 
     private fun setOptionMenuForDetailFragment(){
-        bindingDetail?.toolbarDetail?.apply {
+        bindingDetail?.toolbar3?.apply {
             val host:MenuHost=this
             host.addMenuProvider(object : MenuProvider {
                 override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -145,10 +150,26 @@ class DetailOfSelectedUserFragment : Fragment() {
                 }
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    TODO("Not yet implemented")
+                    val option=when(menuItem.itemId){
+                        R.id.theme_settings_option -> {
+                            findNavController().navigate(DetailOfSelectedUserFragmentDirections.actionDetailOfSelectedUserFragmentToThemeSettingFragment())
+                            true
+                        }
+                        R.id.favourite_user_option -> {
+                            findNavController().navigate(DetailOfSelectedUserFragmentDirections.actionDetailOfSelectedUserFragmentToFavouriteUserFragment())
+                            true
+                        }
+                        else -> false
+                    }
+                    return option
                 }
 
             },viewLifecycleOwner,Lifecycle.State.RESUMED)
+
+            //back to search
+            setNavigationOnClickListener {
+                findNavController().navigate(DetailOfSelectedUserFragmentDirections.actionDetailOfSelectedUserFragmentToSearchFragment())
+            }
         }
     }
 

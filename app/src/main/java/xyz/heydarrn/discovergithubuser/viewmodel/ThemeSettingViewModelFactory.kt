@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import xyz.heydarrn.discovergithubuser.model.ThemeSettingPreference
 
+@Suppress("UNCHECKED_CAST")
 class ThemeSettingViewModelFactory(private val preference: ThemeSettingPreference):ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

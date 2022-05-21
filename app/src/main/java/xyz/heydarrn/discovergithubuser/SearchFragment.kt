@@ -7,6 +7,8 @@ import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.heydarrn.discovergithubuser.databinding.FragmentSearchBinding
 import xyz.heydarrn.discovergithubuser.model.SearchUserListAdapter
@@ -31,6 +33,7 @@ class SearchFragment : Fragment() {
 
         bindingSearch?.inspectocatAtHome?.setImageResource(
             R.drawable.github_octocat_png_github_inspectocat_896)
+
         setOptionMenuForSearchFragment()
         monitorViewModel()
         getTextFromSearchView()

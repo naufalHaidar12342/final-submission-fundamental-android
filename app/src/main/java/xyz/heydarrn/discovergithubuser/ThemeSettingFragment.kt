@@ -11,6 +11,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import xyz.heydarrn.discovergithubuser.databinding.FragmentThemeSettingBinding
 import xyz.heydarrn.discovergithubuser.model.ThemeSettingPreference
 import xyz.heydarrn.discovergithubuser.viewmodel.ThemeSettingViewModel
@@ -33,6 +34,11 @@ class ThemeSettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bindingThemeSetting?.imageViewThemeIcon?.setImageResource(R.drawable.ic_baseline_light_mode_24)
         setThisAppTheme()
+
+        //set the back button to navigate back toward search fragment
+        bindingThemeSetting?.toolbarThemeSetting?.setNavigationOnClickListener {
+            findNavController().navigate(ThemeSettingFragmentDirections.actionThemeSettingFragmentToSearchFragment())
+        }
 
     }
 

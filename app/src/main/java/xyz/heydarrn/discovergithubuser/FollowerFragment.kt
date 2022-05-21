@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.heydarrn.discovergithubuser.databinding.FragmentFollowerBinding
@@ -36,6 +37,11 @@ class FollowerFragment : Fragment() {
         receivedUsername=argsFollower.usernameToFollower
 
         monitorViewModelFollower(receivedUsername)
+
+        //back to detail of user fragment
+        bindingFollower?.toolbarFollower?.setNavigationOnClickListener {
+            findNavController().navigate(FollowerFragmentDirections.actionFollowerFragmentToDetailOfSelectedUserFragment())
+        }
 
     }
 
