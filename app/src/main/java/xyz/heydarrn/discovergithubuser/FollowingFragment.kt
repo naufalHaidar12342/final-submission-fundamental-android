@@ -32,12 +32,15 @@ class FollowingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         receiveUsername=argsFollowing.usernameToFollowing
+        val usersIdReceived=argsFollowing.usersIdToFollowing
         monitorViewModelFollowing(receiveUsername)
 
         //back to detail of user fragment
         bindingFollowing?.toolbarFollowing?.setNavigationOnClickListener {
-            findNavController().navigate(FollowingFragmentDirections.actionFollowingFragmentToDetailOfSelectedUserFragment())
-            monitorViewModelFollowing(receiveUsername)
+            findNavController().navigate(FollowingFragmentDirections.actionFollowingFragmentToDetailOfSelectedUserFragment()
+                .setUsernameSelected(receiveUsername)
+                .setIdOfUsernameSelected(usersIdReceived))
+
         }
     }
 

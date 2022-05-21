@@ -55,8 +55,8 @@ class DetailOfSelectedUserFragment : Fragment() {
 
         setOptionMenuForDetailFragment()
         setUserDetail(receivedArgs, receivedID)
-        openFollowerPage(receivedArgs)
-        openFollowingPage(receivedArgs)
+        openFollowerPage(receivedArgs,receivedID)
+        openFollowingPage(receivedArgs,receivedID)
 
     }
 
@@ -122,21 +122,23 @@ class DetailOfSelectedUserFragment : Fragment() {
         }
     }
 
-    private fun openFollowerPage(sendStringToFollowerFragment: String){
+    private fun openFollowerPage(sendStringToFollowerFragment: String, sendUsersID:Int){
         bindingDetail?.buttonToFollower?.setOnClickListener {
             findNavController().navigate(
                 DetailOfSelectedUserFragmentDirections
                     .actionDetailOfSelectedUserFragmentToFollowerFragment()
-                    .setUsernameToFollower(sendStringToFollowerFragment))
+                    .setUsernameToFollower(sendStringToFollowerFragment)
+                    .setUsersIdToFollower(sendUsersID))
         }
     }
 
-    private fun openFollowingPage(sendStringToFollowingFragment: String){
+    private fun openFollowingPage(sendStringToFollowingFragment: String,usersID:Int){
         bindingDetail?.buttonToFollowing?.setOnClickListener {
             findNavController().navigate(
                 DetailOfSelectedUserFragmentDirections
                     .actionDetailOfSelectedUserFragmentToFollowingFragment()
-                    .setUsernameToFollowing(sendStringToFollowingFragment))
+                    .setUsernameToFollowing(sendStringToFollowingFragment)
+                    .setUsersIdToFollowing(usersID))
         }
     }
 

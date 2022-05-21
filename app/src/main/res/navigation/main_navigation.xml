@@ -63,6 +63,10 @@
         <action
             android:id="@+id/action_followerFragment_to_detailOfSelectedUserFragment"
             app:destination="@id/detailOfSelectedUserFragment" />
+        <argument
+            android:name="usersIdToFollower"
+            app:argType="integer"
+            android:defaultValue="1" />
     </fragment>
     <fragment
         android:id="@+id/followingFragment"
@@ -76,6 +80,10 @@
         <action
             android:id="@+id/action_followingFragment_to_detailOfSelectedUserFragment"
             app:destination="@id/detailOfSelectedUserFragment" />
+        <argument
+            android:name="usersIdToFollowing"
+            app:argType="integer"
+            android:defaultValue="1" />
     </fragment>
     <fragment
         android:id="@+id/favouriteUserFragment"

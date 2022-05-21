@@ -35,12 +35,16 @@ class FollowerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //set receivedUsername value with safe argument, sent by detail user fragment
         receivedUsername=argsFollower.usernameToFollower
+        val receivedID=argsFollower.usersIdToFollower
 
         monitorViewModelFollower(receivedUsername)
 
         //back to detail of user fragment
         bindingFollower?.toolbarFollower?.setNavigationOnClickListener {
-            findNavController().navigate(FollowerFragmentDirections.actionFollowerFragmentToDetailOfSelectedUserFragment())
+            findNavController()
+                .navigate(FollowerFragmentDirections.actionFollowerFragmentToDetailOfSelectedUserFragment()
+                    .setUsernameSelected(receivedUsername)
+                    .setIdOfUsernameSelected(receivedID))
         }
 
     }
