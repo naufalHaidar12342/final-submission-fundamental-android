@@ -46,7 +46,7 @@ class SearchFragment : Fragment() {
             setOnMenuItemClickListener { itemMenu ->
                 when(itemMenu.itemId){
                     R.id.favourite_user_option ->{
-
+                        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToFavouriteUserFragment())
                         true
                     }
                     R.id.theme_settings_option ->{
@@ -85,12 +85,14 @@ class SearchFragment : Fragment() {
             this.adapter=searchAdapter
         }
         searchAdapter.setThisUserForSending(object : SearchUserListAdapter.ClickThisUser {
-            override fun selectThisUser(selectedUser: String, idSelected:Int) {
+            override fun selectThisUser(selectedUser: String, idSelected:Int, profilePicture:String, profileLink:String) {
                 findNavController().navigate(
                     SearchFragmentDirections
                         .actionSearchFragmentToDetailOfSelectedUserFragment()
                         .setUsernameSelected(selectedUser)
-                        .setIdOfUsernameSelected(idSelected))
+                        .setIdOfUsernameSelected(idSelected)
+                        .setAvatarOfUsernameSelected(profilePicture)
+                        .setProfileOfUsernameSelected(profileLink))
             }
         })
 

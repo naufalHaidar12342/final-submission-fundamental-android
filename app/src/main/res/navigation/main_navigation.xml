@@ -50,6 +50,14 @@
         <action
             android:id="@+id/action_detailOfSelectedUserFragment_to_favouriteUserFragment"
             app:destination="@id/favouriteUserFragment" />
+        <argument
+            android:name="avatarOfUsernameSelected"
+            app:argType="string"
+            android:defaultValue="https://avatars.githubusercontent.com/u/73435900?v=4" />
+        <argument
+            android:name="profileOfUsernameSelected"
+            app:argType="string"
+            android:defaultValue="https://github.com/naufalHaidar12342" />
     </fragment>
     <fragment
         android:id="@+id/followerFragment"
@@ -67,6 +75,14 @@
             android:name="usersIdToFollower"
             app:argType="integer"
             android:defaultValue="1" />
+        <argument
+            android:name="usersAvatarToFollower"
+            app:argType="string"
+            android:defaultValue="https://avatars.githubusercontent.com/u/73435900?v=4" />
+        <argument
+            android:name="usersProfileLinkToFollower"
+            app:argType="string"
+            android:defaultValue="https://github.com/naufalHaidar12342" />
     </fragment>
     <fragment
         android:id="@+id/followingFragment"
@@ -84,12 +100,26 @@
             android:name="usersIdToFollowing"
             app:argType="integer"
             android:defaultValue="1" />
+        <argument
+            android:name="usersAvatarToFollowing"
+            app:argType="string"
+            android:defaultValue="https://avatars.githubusercontent.com/u/73435900?v=4" />
+        <argument
+            android:name="usersProfileLinkToFollowing"
+            android:defaultValue="https://github.com/naufalHaidar12342" />
     </fragment>
     <fragment
         android:id="@+id/favouriteUserFragment"
         android:name="xyz.heydarrn.discovergithubuser.FavouriteUserFragment"
         android:label="fragment_favourite_user"
-        tools:layout="@layout/fragment_favourite_user" />
+        tools:layout="@layout/fragment_favourite_user" >
+        <action
+            android:id="@+id/action_favouriteUserFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_favouriteUserFragment_to_detailOfSelectedUserFragment"
+            app:destination="@id/detailOfSelectedUserFragment" />
+    </fragment>
     <fragment
         android:id="@+id/themeSettingFragment"
         android:name="xyz.heydarrn.discovergithubuser.ThemeSettingFragment"

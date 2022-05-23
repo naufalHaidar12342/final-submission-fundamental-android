@@ -18,7 +18,6 @@ class FollowingFragment : Fragment() {
     private val bindingFollowing get() = _bindingFollowing
     private val viewModelFollowing by viewModels<FollowingViewModel>()
     private val adapterFollowing by lazy { FollowingListAdapter() }
-    private lateinit var receiveUsername:String
     private val argsFollowing:FollowingFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -31,15 +30,20 @@ class FollowingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        receiveUsername=argsFollowing.usernameToFollowing
-        val usersIdReceived=argsFollowing.usersIdToFollowing
-        monitorViewModelFollowing(receiveUsername)
+        val followingUsername:String = argsFollowing.usernameToFollowing
+        val followingID=argsFollowing.usersIdToFollowing
+        val followingAvatar=argsFollowing.usersAvatarToFollowing
+        val followingProfileLink=argsFollowing.usersProfileLinkToFollowing
+
+        monitorViewModelFollowing(followingUsername)
 
         //back to detail of user fragment
         bindingFollowing?.toolbarFollowing?.setNavigationOnClickListener {
             findNavController().navigate(FollowingFragmentDirections.actionFollowingFragmentToDetailOfSelectedUserFragment()
-                .setUsernameSelected(receiveUsername)
-                .setIdOfUsernameSelected(usersIdReceived))
+                .setUsernameSelected(followingUsername)
+                .setIdOfUsernameSelected(followingID)
+                .setAvatarOfUsernameSelected(followingAvatar)
+                .setProfileOfUsernameSelected(followingProfileLink))
 
         }
     }

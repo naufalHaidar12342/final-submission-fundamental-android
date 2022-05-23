@@ -1,39 +1,24 @@
 package xyz.heydarrn.discovergithubuser
 
-import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
-import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.commit
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import xyz.heydarrn.discovergithubuser.databinding.FragmentDetailOfSelectedUserBinding
-import xyz.heydarrn.discovergithubuser.model.TabLayoutAdapter
 import xyz.heydarrn.discovergithubuser.viewmodel.DetailOfUserViewModel
 
 class DetailOfSelectedUserFragment : Fragment() {
     private val args:DetailOfSelectedUserFragmentArgs by navArgs()
-    private lateinit var receivedArgs:String
     private var _bindingDetail:FragmentDetailOfSelectedUserBinding?=null
     private val bindingDetail get() = _bindingDetail
     private lateinit var viewModelDetail:DetailOfUserViewModel
@@ -49,18 +34,22 @@ class DetailOfSelectedUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        receivedArgs=args.usernameSelected
-        val receivedID=args.idOfUsernameSelected
         viewModelDetail= ViewModelProvider(this)[DetailOfUserViewModel::class.java]
 
+        //receive safe Arguments, sent from search fragment, following, and follower
+        val receivedUsername = args.usernameSelected
+        val receivedID=args.idOfUsernameSelected
+        val receivedAvatarURL=args.avatarOfUsernameSelected
+        val receivedHtmlURL=args.profileOfUsernameSelected
+
         setOptionMenuForDetailFragment()
-        setUserDetail(receivedArgs, receivedID)
-        openFollowerPage(receivedArgs,receivedID)
-        openFollowingPage(receivedArgs,receivedID)
+        setUserDetail(receivedUsername, receivedID, receivedAvatarURL, receivedHtmlURL)
+        openFollowerPage(receivedUsername,receivedID,receivedAvatarURL,receivedHtmlURL)
+        openFollowingPage(receivedUsername,receivedID, receivedAvatarURL, receivedHtmlURL)
 
     }
 
-    private fun setUserDetail(username:String, userID:Int){
+    private fun setUserDetail(username:String, userID:Int, userAvatar: String, userProfileLink: String){
         viewModelDetail.setUserDetailInfo(username)
         viewModelDetail.setNewUserDetail().observe(viewLifecycleOwner){
             if (it!=null){
@@ -110,11 +99,11 @@ class DetailOfSelectedUserFragment : Fragment() {
             }
         }
 
-        //remove user from favourite user database
+        //add or remove user from favourite user database
         bindingDetail?.toggleButtonFavouriteUser?.setOnClickListener {
             isSwitched = ! isSwitched
             if (isSwitched){
-                viewModelDetail.addToFavourite(username,userID)
+                viewModelDetail.addToFavourite(username,userID,userAvatar,userProfileLink)
             }else{
                 viewModelDetail.removeFavouriteUserWithID(userID)
             }
@@ -122,23 +111,27 @@ class DetailOfSelectedUserFragment : Fragment() {
         }
     }
 
-    private fun openFollowerPage(sendStringToFollowerFragment: String, sendUsersID:Int){
+    private fun openFollowerPage(sendUsernameToFollower: String, sendUsersID:Int, sendAvatar:String, sendProfileURL:String){
         bindingDetail?.buttonToFollower?.setOnClickListener {
             findNavController().navigate(
                 DetailOfSelectedUserFragmentDirections
                     .actionDetailOfSelectedUserFragmentToFollowerFragment()
-                    .setUsernameToFollower(sendStringToFollowerFragment)
-                    .setUsersIdToFollower(sendUsersID))
+                    .setUsernameToFollower(sendUsernameToFollower)
+                    .setUsersIdToFollower(sendUsersID)
+                    .setUsersAvatarToFollower(sendAvatar)
+                    .setUsersProfileLinkToFollower(sendProfileURL))
         }
     }
 
-    private fun openFollowingPage(sendStringToFollowingFragment: String,usersID:Int){
+    private fun openFollowingPage(sendUsernameToFollowing: String, usersID:Int, usersAvatar:String, usersProfileLink:String){
         bindingDetail?.buttonToFollowing?.setOnClickListener {
             findNavController().navigate(
                 DetailOfSelectedUserFragmentDirections
                     .actionDetailOfSelectedUserFragmentToFollowingFragment()
-                    .setUsernameToFollowing(sendStringToFollowingFragment)
-                    .setUsersIdToFollowing(usersID))
+                    .setUsernameToFollowing(sendUsernameToFollowing)
+                    .setUsersIdToFollowing(usersID)
+                    .setUsersAvatarToFollowing(usersAvatar)
+                    .setUsersProfileLinkToFollowing(usersProfileLink))
         }
     }
 

@@ -20,7 +20,6 @@ class FollowerFragment : Fragment() {
     private val bindingFollower get() = _bindingFollower
     private val viewModelFollower by viewModels<FollowerViewModel>()
     private val adapterFollower by lazy { FollowerListAdapter() }
-    private lateinit var receivedUsername:String
     private val argsFollower:FollowerFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -33,18 +32,24 @@ class FollowerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //set receivedUsername value with safe argument, sent by detail user fragment
-        receivedUsername=argsFollower.usernameToFollower
-        val receivedID=argsFollower.usersIdToFollower
 
-        monitorViewModelFollower(receivedUsername)
+        //set username to be shown
+        // the same user have id, avatarURL, and htmlUrL, just to be send back when back button pressed
+        val followerUsername:String = argsFollower.usernameToFollower
+        val followerID=argsFollower.usersIdToFollower
+        val followerAvatar=argsFollower.usersAvatarToFollower
+        val followerProfileLink=argsFollower.usersProfileLinkToFollower
+
+        monitorViewModelFollower(followerUsername)
 
         //back to detail of user fragment
         bindingFollower?.toolbarFollower?.setNavigationOnClickListener {
             findNavController()
                 .navigate(FollowerFragmentDirections.actionFollowerFragmentToDetailOfSelectedUserFragment()
-                    .setUsernameSelected(receivedUsername)
-                    .setIdOfUsernameSelected(receivedID))
+                    .setUsernameSelected(followerUsername)
+                    .setIdOfUsernameSelected(followerID)
+                    .setAvatarOfUsernameSelected(followerAvatar)
+                    .setProfileOfUsernameSelected(followerProfileLink))
         }
 
     }

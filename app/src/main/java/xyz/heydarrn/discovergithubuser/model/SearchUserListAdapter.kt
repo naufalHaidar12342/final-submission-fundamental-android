@@ -37,7 +37,12 @@ class SearchUserListAdapter:ListAdapter<ItemsItem,SearchUserListAdapter.SearchVi
                     )
                 }
                 root.setOnClickListener {
-                    whenUserSelected?.selectThisUser(item.login, item.id)
+                    whenUserSelected?.selectThisUser(
+                        selectedUser = item.login,
+                        profileLink = item.htmlUrl,
+                        idSelected = item.id,
+                        profilePicture = item.avatarUrl
+                    )
                 }
 
             }
@@ -55,6 +60,6 @@ class SearchUserListAdapter:ListAdapter<ItemsItem,SearchUserListAdapter.SearchVi
     }
 
     interface ClickThisUser{
-        fun selectThisUser(selectedUser:String, idSelected:Int)
+        fun selectThisUser(selectedUser:String, idSelected:Int, profilePicture:String, profileLink:String)
     }
 }

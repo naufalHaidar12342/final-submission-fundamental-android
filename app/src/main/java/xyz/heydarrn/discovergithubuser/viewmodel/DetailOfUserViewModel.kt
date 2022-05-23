@@ -50,9 +50,14 @@ class DetailOfUserViewModel(application: Application): AndroidViewModel(applicat
 
     fun setNewUserDetail():LiveData<UserDetailedInfoResponse> =showUserDetail
 
-    fun addToFavourite(usernameSelected:String, id:Int){
+    fun addToFavourite(usernameSelected:String, id:Int, avatarURL:String, profileLink:String){
         CoroutineScope(Dispatchers.IO).launch {
-            val favouriteUser= FavouriteGithubUser(usernameSelected,id)
+            val favouriteUser= FavouriteGithubUser(
+                login = usernameSelected,
+                id = id,
+                htmlUrl = profileLink,
+                avatarUrl = avatarURL
+            )
 
             userDAO?.addThisUserToFavourite(favouriteUser)
         }
