@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SwitchCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -33,7 +35,11 @@ class ThemeSettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindingThemeSetting?.imageViewThemeIcon?.setImageResource(R.drawable.ic_baseline_light_mode_24)
-        setThisAppTheme()
+
+        val switchTheme=bindingThemeSetting?.switchDarkMode
+        if (switchTheme != null) {
+            setThisAppTheme(switchTheme)
+        }
 
         //set the back button to navigate back toward search fragment
         bindingThemeSetting?.toolbarThemeSetting?.setNavigationOnClickListener {
@@ -42,7 +48,7 @@ class ThemeSettingFragment : Fragment() {
 
     }
 
-    private fun setThisAppTheme(){
+    private fun setThisAppTheme(switch: SwitchCompat){
         val preference=ThemeSettingPreference.getThemeInstance(requireContext().dataStore)
         val viewModelTheme= ViewModelProvider(this,ThemeSettingViewModelFactory(preference))[ThemeSettingViewModel::class.java]
 
@@ -51,11 +57,13 @@ class ThemeSettingFragment : Fragment() {
 
                 if (isDarkModeActive){
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    switch.isChecked=true
                     text = textOn
                     bindingThemeSetting?.imageViewThemeIcon?.setImageResource(R.drawable.ic_baseline_dark_mode_24)
 
                 }else{
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    switch.isChecked=false
                     text = textOff
                     bindingThemeSetting?.imageViewThemeIcon?.setImageResource(R.drawable.ic_baseline_light_mode_24)
                 }
