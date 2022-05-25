@@ -1,19 +1,34 @@
 package xyz.heydarrn.discovergithubuser
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.SearchView
+import android.widget.ToggleButton
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SwitchCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import xyz.heydarrn.discovergithubuser.databinding.FragmentSearchBinding
 import xyz.heydarrn.discovergithubuser.model.SearchUserListAdapter
+import xyz.heydarrn.discovergithubuser.model.ThemeSettingPreference
 import xyz.heydarrn.discovergithubuser.viewmodel.SearchUserViewModel
+import xyz.heydarrn.discovergithubuser.viewmodel.ThemeSettingViewModel
+import xyz.heydarrn.discovergithubuser.viewmodel.ThemeSettingViewModelFactory
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "setting")
 class SearchFragment : Fragment() {
     private var _bindingSearchFragment:FragmentSearchBinding?=null
     private val bindingSearch get() = _bindingSearchFragment
@@ -34,9 +49,14 @@ class SearchFragment : Fragment() {
         bindingSearch?.inspectocatAtHome?.setImageResource(
             R.drawable.github_octocat_png_github_inspectocat_896)
 
+        val switch=bindingSearch?.switchThemeSearchFragment
+        if (switch != null) {
+            setThisAppTheme(switch)
+        }
         setOptionMenuForSearchFragment()
         monitorViewModel()
         getTextFromSearchView()
+
     }
 
 
@@ -126,6 +146,33 @@ class SearchFragment : Fragment() {
                     inspectocatAtHome.visibility=View.GONE
                     textviewInspectocat.visibility=View.GONE
                     textViewInspectocatSubtitle.visibility=View.GONE
+                }
+            }
+        }
+    }
+
+    private fun setThisAppTheme(switch: SwitchCompat){
+        val preference=ThemeSettingPreference.getThemeInstance(requireContext().dataStore)
+        val viewModelTheme= ViewModelProvider(this,ThemeSettingViewModelFactory(preference))[ThemeSettingViewModel::class.java]
+
+        viewModelTheme.getThemeSettingViewModel().observe(viewLifecycleOwner) { isDarkModeActive: Boolean ->
+            bindingSearch?.switchThemeSearchFragment?.apply {
+
+                if (isDarkModeActive){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    switch.isChecked=true
+                    text = textOn
+                    bindingSearch?.iconThemeSearchFragment?.setImageResource(R.drawable.ic_baseline_dark_mode_24)
+
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    switch.isChecked=false
+                    text = textOff
+                    bindingSearch?.iconThemeSearchFragment?.setImageResource(R.drawable.ic_baseline_light_mode_24)
+                }
+                //listen or watch to the change of switch value (false when not clicked, true when clicked)
+                setOnCheckedChangeListener { _, switchIsClicked ->
+                    viewModelTheme.saveSelectedTheme(switchIsClicked)
                 }
             }
         }

@@ -17,7 +17,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/CollapsingToolbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorOnPrimary"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|exitUntilCollapsed|snap">
@@ -120,17 +120,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginEnd="32dp"
-                    android:layout_marginBottom="16dp"
                     android:drawablePadding="4dp"
                     android:text="@string/user_repository_design_placeholder"
                     android:textColor="@color/octocat_main_color"
                     app:drawableStartCompat="@drawable/ic_git"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/location_user_detail"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/location_user_detail" />
 
                 <ToggleButton
                     android:id="@+id/toggleButton_favourite_user"
@@ -145,6 +142,36 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_theme_detail_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="140dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/repository_user_detail"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:ignore="TextContrastCheck" />
+
+                <ImageView
+                    android:id="@+id/icon_switch_theme_detail_fragment"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@string/theme_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/switch_theme_detail_fragment"
+                    app:layout_constraintHorizontal_bias="0.962"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/repository_user_detail"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/custom_appbar_switch_theme"
+                    tools:ignore="ImageContrastCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

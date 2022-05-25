@@ -37,9 +37,7 @@ class ThemeSettingFragment : Fragment() {
         bindingThemeSetting?.imageViewThemeIcon?.setImageResource(R.drawable.ic_baseline_light_mode_24)
 
         val switchTheme=bindingThemeSetting?.switchDarkMode
-        if (switchTheme != null) {
-            setThisAppTheme(switchTheme)
-        }
+        setThisAppTheme(switchTheme!!)
 
         //set the back button to navigate back toward search fragment
         bindingThemeSetting?.toolbarThemeSetting?.setNavigationOnClickListener {

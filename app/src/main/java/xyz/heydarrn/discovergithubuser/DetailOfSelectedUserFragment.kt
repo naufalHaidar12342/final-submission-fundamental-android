@@ -1,22 +1,33 @@
 package xyz.heydarrn.discovergithubuser
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import xyz.heydarrn.discovergithubuser.databinding.FragmentDetailOfSelectedUserBinding
+import xyz.heydarrn.discovergithubuser.model.ThemeSettingPreference
 import xyz.heydarrn.discovergithubuser.viewmodel.DetailOfUserViewModel
+import xyz.heydarrn.discovergithubuser.viewmodel.ThemeSettingViewModel
+import xyz.heydarrn.discovergithubuser.viewmodel.ThemeSettingViewModelFactory
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "setting")
 class DetailOfSelectedUserFragment : Fragment() {
     private val args:DetailOfSelectedUserFragmentArgs by navArgs()
     private var _bindingDetail:FragmentDetailOfSelectedUserBinding?=null
@@ -46,6 +57,11 @@ class DetailOfSelectedUserFragment : Fragment() {
         setUserDetail(receivedUsername, receivedID, receivedAvatarURL, receivedHtmlURL)
         openFollowerPage(receivedUsername,receivedID,receivedAvatarURL,receivedHtmlURL)
         openFollowingPage(receivedUsername,receivedID, receivedAvatarURL, receivedHtmlURL)
+
+        val switch=bindingDetail?.switchThemeDetailFragment
+        if (switch!=null){
+            setThisAppTheme(switch)
+        }
 
     }
 
@@ -164,6 +180,35 @@ class DetailOfSelectedUserFragment : Fragment() {
             //back to search
             setNavigationOnClickListener {
                 findNavController().navigate(DetailOfSelectedUserFragmentDirections.actionDetailOfSelectedUserFragmentToSearchFragment())
+            }
+        }
+    }
+
+    private fun setThisAppTheme(switch: SwitchMaterial){
+        val preference= ThemeSettingPreference.getThemeInstance(requireContext().dataStore)
+        val viewModelTheme= ViewModelProvider(this,
+            ThemeSettingViewModelFactory(preference)
+        )[ThemeSettingViewModel::class.java]
+
+        viewModelTheme.getThemeSettingViewModel().observe(viewLifecycleOwner) { isDarkModeActive: Boolean ->
+            bindingDetail?.toggleButtonFavouriteUser?.apply {
+
+                if (isDarkModeActive){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    switch.isChecked=true
+                    text = textOn
+                    bindingDetail?.iconSwitchThemeDetailFragment?.setImageResource(R.drawable.ic_baseline_dark_mode_24)
+
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    switch.isChecked=false
+                    text = textOff
+                    bindingDetail?.iconSwitchThemeDetailFragment?.setImageResource(R.drawable.ic_baseline_light_mode_24)
+                }
+                //listen or watch to the change of switch value (false when not clicked, true when clicked)
+                setOnCheckedChangeListener { _, switchIsClicked ->
+                    viewModelTheme.saveSelectedTheme(switchIsClicked)
+                }
             }
         }
     }
